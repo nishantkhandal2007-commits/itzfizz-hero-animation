@@ -1,0 +1,192 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Itzfizz - Hero Animation</title>
+  
+  <!-- GSAP Animation Libraries via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #0b0f19;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Hero Section (Above the fold) */
+    .hero-section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      padding: 20px;
+    }
+
+    .headline {
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      letter-spacing: 0.6em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: #00f2fe;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+
+    /* Stats Grid */
+    .stats-container {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1.5rem 2.5rem;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #4facfe;
+    }
+
+    .stat-desc {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    /* Scroll Track & Moving Car */
+    .scroll-container {
+      height: 250vh;
+      position: relative;
+      background: radial-gradient(circle at center, #1e293b 0%, #0b0f19 100%);
+    }
+
+    .sticky-track {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .car-element {
+      width: 280px;
+      height: auto;
+      filter: drop-shadow(0 20px 30px rgba(0, 242, 254, 0.3));
+    }
+
+    /* Final Outro Section */
+    .footer-section {
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #64748b;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <h1 class="headline" id="title">W E L C O M E &nbsp; I T Z F I Z Z</h1>
+    
+    <div class="stats-container">
+      <div class="stat-card">
+        <div class="stat-number">99.8%</div>
+        <div class="stat-desc">Uptime Guaranteed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">50K+</div>
+        <div class="stat-desc">Active Global Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4.9/5</div>
+        <div class="stat-desc">Client Satisfaction</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCROLL ANIMATION SECTION -->
+  <section class="scroll-container">
+    <div class="sticky-track">
+      <!-- Modern Sports Car SVG Vector -->
+      <svg class="car-element" id="car" viewBox="0 0 500 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 130 C70 130, 90 90, 160 85 C230 80, 310 80, 360 100 C410 115, 450 120, 470 135 C480 145, 475 160, 450 160 L50 160 C35 160, 25 145, 40 130 Z" fill="#00f2fe"/>
+        <path d="M170 88 L340 102 C310 86, 260 85, 170 88 Z" fill="#0b0f19"/>
+        <circle cx="110" cy="160" r="32" fill="#1e293b" stroke="#ffffff" stroke-width="6"/>
+        <circle cx="390" cy="160" r="32" fill="#1e293b" stroke="#ffffff" stroke-width="6"/>
+      </svg>
+    </div>
+  </section>
+
+  <footer class="footer-section">
+    <p>Scroll Up to Replay</p>
+  </footer>
+
+  <!-- GSAP ANIMATION LOGIC -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Initial Load Animation (Fade + Staggered reveal)
+    window.addEventListener("DOMContentLoaded", () => {
+      gsap.to("#title", {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "power3.out"
+      });
+
+      gsap.to(".stat-card", {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.25,
+        delay: 0.4,
+        ease: "power2.out"
+      });
+    });
+
+    // 2. Scroll-Driven Movement Animation
+    gsap.to("#car", {
+      scrollTrigger: {
+        trigger: ".scroll-container",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1.5 // Fluid easing tied to scroll speed
+      },
+      x: 350,
+      scale: 1.4,
+      rotation: 5,
+      ease: "none"
+    });
+  </script>
+</body>
+</html>
